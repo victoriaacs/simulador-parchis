@@ -4,6 +4,7 @@
 #include <sys/socket.h>
 #include <sys/wait.h>
 #include "../include/comun.h"
+#include "fichas.c"
 
 int main() {
     int sockets[4][2]; 
@@ -18,17 +19,9 @@ int main() {
         if (fork() == 0) { // Creación de procesos jugadores 
             close(sockets[i][0]);
             close(pipes[i][0]);
-            
-            // Lógica del Hijo
-            Mensaje msg;
-            read(sockets[i][1], &msg, sizeof(Mensaje));
-            printf("Hijo %d: He recibido el turno del Árbitro.\n", i);
-            
-            // Persona 2 
-            // void* logica_ficha(void* arg) {}
-            
-            close(sockets[i][1]);
-            close(pipes[i][1]);
+
+            run_hijo(sockets[i][1], pipes[i][1], i);
+
             exit(0);
         }
         close(sockets[i][1]);
