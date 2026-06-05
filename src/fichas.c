@@ -66,7 +66,7 @@ void run_hijo(int socket_hijo, int pipe_estructura, int id_jugador){
         }
 
         Mensaje respuesta ={2, id_jugador, dado};
-        write(socket_hijo, &respuesta, sizeo(Mensaje));
+        write(socket_hijo, &respuesta, sizeof(Mensaje));
     }
 
     Estadisticas stats = {1};
